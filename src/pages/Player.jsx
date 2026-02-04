@@ -18,23 +18,41 @@ const Player = () => {
   const loadMedia = async () => {
     try {
       const response = await mediaService.getMediaDetails(id);
-      setMedia(response.data);
+      const mediaData = response.data;
+      setMedia(mediaData);
       
-      // Générer une URL de trailer YouTube basée sur le titre
-      const searchQuery = encodeURIComponent(`${response.data.title} official trailer`);
-      
-      // URLs de démo populaires pour les films Netflix
-      const demoVideos = {
-        'movie': 'https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&controls=1&rel=0',
-        'series': 'https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&controls=1&rel=0'
+      // Base de films GRATUITS et LÉGAUX (Internet Archive + Domaine Public)
+      const freeMovies = {
+        // Films classiques du domaine public
+        'tt0051554': 'https://archive.org/embed/night_of_the_living_dead', // Night of Living Dead
+        'tt0055630': 'https://archive.org/embed/Charade_Cary_Grant', // Charade
+        'tt0017136': 'https://archive.org/embed/nosferatu_eine_symphonie_des_grauens', // Nosferatu
+        'tt0033467': 'https://archive.org/embed/TheCatAndTheCanary1939', // The Cat and the Canary
+        
+        // Si pas de film spécifique, utiliser des films de démo
+        'default': [
+          'https://archive.org/embed/night_of_the_living_dead',
+          'https://archive.org/embed/Charade_Cary_Grant',
+          'https://archive.org/embed/ThePhantomoftheOpera1925',
+          'https://archive.org/embed/TheCatAndTheCanary1939',
+          'https://archive.org/embed/His_Girl_Friday_1940'
+        ]
       };
       
-      // Pour une vraie implémentation, utilisez l'API YouTube
-      // Pour l'instant, on utilise une vidéo de démo
-      setVideoUrl(`https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&controls=1&rel=0&modestbranding=1`);
+      let videoUrl = freeMovies[id];
+      
+      // Si pas de film spécifique, prendre un film aléatoire
+      if (!videoUrl) {
+        const defaults = freeMovies.default;
+        videoUrl = defaults[Math.floor(Math.random() * defaults.length)];
+      }
+      
+      setVideoUrl(videoUrl);
       
     } catch (error) {
       console.error('Erreur lors du chargement:', error);
+      // Fallback vers un film de démo
+      setVideoUrl('https://archive.org/embed/night_of_the_living_dead');
     } finally {
       setLoading(false);
     }
