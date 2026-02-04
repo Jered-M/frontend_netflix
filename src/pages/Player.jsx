@@ -21,38 +21,27 @@ const Player = () => {
       const mediaData = response.data;
       setMedia(mediaData);
       
-      // Base de films GRATUITS et LÉGAUX (Internet Archive + Domaine Public)
-      const freeMovies = {
-        // Films classiques du domaine public
-        'tt0051554': 'https://archive.org/embed/night_of_the_living_dead', // Night of Living Dead
-        'tt0055630': 'https://archive.org/embed/Charade_Cary_Grant', // Charade
-        'tt0017136': 'https://archive.org/embed/nosferatu_eine_symphonie_des_grauens', // Nosferatu
-        'tt0033467': 'https://archive.org/embed/TheCatAndTheCanary1939', // The Cat and the Canary
-        
-        // Si pas de film spécifique, utiliser des films de démo
-        'default': [
-          'https://archive.org/embed/night_of_the_living_dead',
-          'https://archive.org/embed/Charade_Cary_Grant',
-          'https://archive.org/embed/ThePhantomoftheOpera1925',
-          'https://archive.org/embed/TheCatAndTheCanary1939',
-          'https://archive.org/embed/His_Girl_Friday_1940'
-        ]
-      };
+      // Utiliser des vidéos de test HTML5 qui fonctionnent à coup sûr
+      // Ces URLs sont des exemples de test publics et légaux
+      const demoVideos = [
+        'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+        'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
+        'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
+        'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
+        'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4',
+        'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4',
+        'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4',
+        'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4'
+      ];
       
-      let videoUrl = freeMovies[id];
-      
-      // Si pas de film spécifique, prendre un film aléatoire
-      if (!videoUrl) {
-        const defaults = freeMovies.default;
-        videoUrl = defaults[Math.floor(Math.random() * defaults.length)];
-      }
-      
-      setVideoUrl(videoUrl);
+      // Sélectionner une vidéo aléatoire basée sur l'ID du film
+      const index = parseInt(id.replace(/\D/g, '')) % demoVideos.length;
+      setVideoUrl(demoVideos[index]);
       
     } catch (error) {
       console.error('Erreur lors du chargement:', error);
-      // Fallback vers un film de démo
-      setVideoUrl('https://archive.org/embed/night_of_the_living_dead');
+      // Fallback vers Big Buck Bunny
+      setVideoUrl('http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4');
     } finally {
       setLoading(false);
     }
@@ -70,14 +59,15 @@ const Player = () => {
 
       <div className="player__video">
         {videoUrl ? (
-          <iframe
-            className="player__iframe"
+          <video
+            className="player__video-element"
             src={videoUrl}
-            title={media?.title}
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-          ></iframe>
+            controls
+            autoPlay
+            controlsList="nodownload"
+          >
+            Votre navigateur ne supporte pas la lecture de vidéos.
+          </video>
         ) : (
           <div className="player__placeholder">
             <FaPlay className="player__play-icon" />
