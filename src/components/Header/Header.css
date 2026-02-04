@@ -1,0 +1,96 @@
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding: 20px 40px;
+  transition: background-color 0.3s ease;
+}
+
+.header--scrolled {
+  background-color: #141414;
+}
+
+.header__container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header__left {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+
+.header__logo {
+  color: #e50914;
+  font-size: 32px;
+  font-weight: 900;
+  text-decoration: none;
+  letter-spacing: 2px;
+}
+
+.header__nav {
+  display: flex;
+  gap: 20px;
+}
+
+.header__nav-link {
+  color: #e5e5e5;
+  text-decoration: none;
+  font-size: 14px;
+  transition: color 0.3s ease;
+}
+
+.header__nav-link:hover {
+  color: #b3b3b3;
+}
+
+.header__right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.header__search {
+  display: flex;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.7);
+  border: 1px solid #fff;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.header__search-input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #fff;
+  padding: 8px 12px;
+  font-size: 14px;
+}
+
+.header__search-btn {
+  background: transparent;
+  border: none;
+  color: #fff;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.header__icon {
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.header__icon:hover {
+  color: #b3b3b3;
+}
+
+.header__profile {
+  cursor: pointer;
+}

@@ -1,0 +1,26 @@
+.series {
+  background-color: #141414;
+  min-height: 100vh;
+}
+
+.series__content {
+  padding-top: 100px;
+}
+
+.series__title {
+  color: #e5e5e5;
+  font-size: 48px;
+  font-weight: 700;
+  padding: 0 60px;
+  margin-bottom: 30px;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  color: #fff;
+  font-size: 24px;
+  background-color: #141414;
+}
