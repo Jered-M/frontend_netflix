@@ -1,5 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { AuthProvider } from './context/AuthContext';
+import ProtectedRoute from './components/ProtectedRoute';
 import Home from './pages/Home';
 import Films from './pages/Films';
 import Series from './pages/Series';
@@ -11,18 +13,20 @@ import MyList from './pages/MyList';
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/films" element={<Films />} />
-        <Route path="/series" element={<Series />} />
-        <Route path="/search" element={<Search />} />
-        <Route path="/watch/:id" element={<Player />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/my-list" element={<MyList />} />
-      </Routes>
-    </Router>
+    <AuthProvider>
+      <Router>
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/" element={<ProtectedRoute><Home /></ProtectedRoute>} />
+          <Route path="/films" element={<ProtectedRoute><Films /></ProtectedRoute>} />
+          <Route path="/series" element={<ProtectedRoute><Series /></ProtectedRoute>} />
+          <Route path="/search" element={<ProtectedRoute><Search /></ProtectedRoute>} />
+          <Route path="/watch/:id" element={<ProtectedRoute><Player /></ProtectedRoute>} />
+          <Route path="/my-list" element={<ProtectedRoute><MyList /></ProtectedRoute>} />
+        </Routes>
+      </Router>
+    </AuthProvider>
   );
 }
 

@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { FaSearch, FaBell, FaUser } from 'react-icons/fa';
+import { FaSearch, FaBell, FaUser, FaSignOutAlt } from 'react-icons/fa';
+import { useAuth } from '../../context/AuthContext';
 import './Header.css';
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [showUserMenu, setShowUserMenu] = useState(false);
   const navigate = useNavigate();
+  const { user, logout } = useAuth();
 
   React.useEffect(() => {
     const handleScroll = () => {
@@ -21,6 +24,11 @@ const Header = () => {
     if (searchQuery.trim()) {
       navigate(`/search?q=${searchQuery}`);
     }
+  };
+
+  const handleLogout = () => {
+    logout();
+    navigate('/login');
   };
 
   return (
@@ -54,8 +62,23 @@ const Header = () => {
           
           <FaBell className="header__icon" />
           
-          <div className="header__profile">
+          <div 
+            className="header__profile"
+            onClick={() => setShowUserMenu(!showUserMenu)}
+            onMouseLeave={() => setShowUserMenu(false)}
+          >
             <FaUser className="header__icon" />
+            {showUserMenu && (
+              <div className="header__user-menu">
+                <div className="header__user-info">
+                  <FaUser className="header__user-avatar" />
+                  <span className="header__user-name">{user?.name || 'Utilisateur'}</span>
+                </div>
+                <button className="header__logout-btn" onClick={handleLogout}>
+                  <FaSignOutAlt /> Déconnexion
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </div>

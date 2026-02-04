@@ -1,34 +1,47 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { authService } from '../services/api';
+import { useAuth } from '../context/AuthContext';
 import './Login.css';
 
 const Login = () => {
   const navigate = useNavigate();
+  const { login, isAuthenticated, error: authError } = useAuth();
   const [formData, setFormData] = useState({
     email: '',
     password: ''
   });
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  // Rediriger si déjà connecté
+  useEffect(() => {
+    if (isAuthenticated()) {
+      navigate('/');
+    }
+  }, [isAuthenticated, navigate]);
 
   const handleChange = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
     });
+    setError(''); // Effacer l'erreur lors de la saisie
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+    setLoading(true);
 
-    try {
-      const response = await authService.login(formData);
-      localStorage.setItem('user', JSON.stringify(response.data.user));
+    const result = await login(formData);
+    
+    if (result.success) {
       navigate('/');
-    } catch (err) {
-      setError(err.response?.data?.error || 'Erreur lors de la connexion');
+    } else {
+      setError(result.error || authError);
     }
+    
+    setLoading(false);
   };
 
   return (
@@ -63,8 +76,8 @@ const Login = () => {
             required
           />
 
-          <button type="submit" className="login__button">
-            Se connecter
+          <button type="submit" className="login__button" disabled={loading}>
+            {loading ? 'Connexion...' : 'Se connecter'}
           </button>
 
           <div className="login__signup">

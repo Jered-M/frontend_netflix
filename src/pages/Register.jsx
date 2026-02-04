@@ -1,22 +1,32 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { authService } from '../services/api';
+import { useAuth } from '../context/AuthContext';
 import './Register.css';
 
 const Register = () => {
   const navigate = useNavigate();
+  const { register, isAuthenticated, error: authError } = useAuth();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     password: ''
   });
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  // Rediriger si déjà connecté
+  useEffect(() => {
+    if (isAuthenticated()) {
+      navigate('/');
+    }
+  }, [isAuthenticated, navigate]);
 
   const handleChange = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
     });
+    setError('');
   };
 
   const handleSubmit = async (e) => {
@@ -28,13 +38,16 @@ const Register = () => {
       return;
     }
 
-    try {
-      const response = await authService.register(formData);
-      localStorage.setItem('user', JSON.stringify(response.data.user));
+    setLoading(true);
+    const result = await register(formData);
+    
+    if (result.success) {
       navigate('/');
-    } catch (err) {
-      setError(err.response?.data?.error || 'Erreur lors de l\'inscription');
+    } else {
+      setError(result.error || authError);
     }
+    
+    setLoading(false);
   };
 
   return (
@@ -79,8 +92,8 @@ const Register = () => {
             required
           />
 
-          <button type="submit" className="register__button">
-            S'inscrire
+          <button type="submit" className="register__button" disabled={loading}>
+            {loading ? 'Inscription...' : 'S\'inscrire'}
           </button>
 
           <div className="register__login">

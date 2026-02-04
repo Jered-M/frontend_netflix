@@ -92,5 +92,58 @@
 }
 
 .header__profile {
+  position: relative;
   cursor: pointer;
+}
+
+.header__user-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 15px;
+  background-color: rgba(0, 0, 0, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  padding: 15px;
+  min-width: 200px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.header__user-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 15px;
+  margin-bottom: 15px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.header__user-avatar {
+  color: #fff;
+  font-size: 24px;
+}
+
+.header__user-name {
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.header__logout-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  background-color: transparent;
+  border: none;
+  color: #fff;
+  padding: 10px;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.header__logout-btn:hover {
+  background-color: rgba(229, 9, 20, 0.8);
 }
