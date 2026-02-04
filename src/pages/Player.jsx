@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { FaArrowLeft } from 'react-icons/fa';
+import { FaArrowLeft, FaPlay, FaPause, FaExpand, FaVolumeUp } from 'react-icons/fa';
 import { mediaService } from '../services/api';
 import './Player.css';
 
@@ -9,6 +9,7 @@ const Player = () => {
   const navigate = useNavigate();
   const [media, setMedia] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [videoUrl, setVideoUrl] = useState('');
 
   useEffect(() => {
     loadMedia();
@@ -18,6 +19,20 @@ const Player = () => {
     try {
       const response = await mediaService.getMediaDetails(id);
       setMedia(response.data);
+      
+      // Générer une URL de trailer YouTube basée sur le titre
+      const searchQuery = encodeURIComponent(`${response.data.title} official trailer`);
+      
+      // URLs de démo populaires pour les films Netflix
+      const demoVideos = {
+        'movie': 'https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&controls=1&rel=0',
+        'series': 'https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&controls=1&rel=0'
+      };
+      
+      // Pour une vraie implémentation, utilisez l'API YouTube
+      // Pour l'instant, on utilise une vidéo de démo
+      setVideoUrl(`https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&controls=1&rel=0&modestbranding=1`);
+      
     } catch (error) {
       console.error('Erreur lors du chargement:', error);
     } finally {
@@ -36,14 +51,22 @@ const Player = () => {
       </button>
 
       <div className="player__video">
-        <div className="player__placeholder">
-          <h2>Lecteur vidéo</h2>
-          <p>{media?.title}</p>
-          <p className="player__note">
-            Note: Ceci est une démo. L'intégration d'une vraie source vidéo 
-            nécessiterait un service de streaming.
-          </p>
-        </div>
+        {videoUrl ? (
+          <iframe
+            className="player__iframe"
+            src={videoUrl}
+            title={media?.title}
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          ></iframe>
+        ) : (
+          <div className="player__placeholder">
+            <FaPlay className="player__play-icon" />
+            <h2>Vidéo non disponible</h2>
+            <p>{media?.title}</p>
+          </div>
+        )}
       </div>
 
       <div className="player__info">
