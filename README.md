@@ -20,27 +20,33 @@ Application frontend moderne construite avec React qui reproduit fidèlement l'i
 ## 🚀 Installation
 
 ### Prérequis
+
 - Node.js 16+ (pour version Vite)
 - OU aucun prérequis (version CDN)
 
 ### Option 1 : Version CDN (Rapide - Recommandée)
 
 1. **Cloner le dépôt**
+
 ```bash
 git clone https://github.com/Jered-M/frontend_netflix.git
 cd frontend_netflix
 ```
 
 2. **Lancer un serveur local**
+
 ```bash
 python -m http.server 3000
 ```
+
 OU
+
 ```bash
 npx serve
 ```
 
 3. **Ouvrir dans le navigateur**
+
 ```
 http://localhost:3000
 ```
@@ -50,16 +56,19 @@ La version CDN utilise `index.html` et `app-simple.js` avec React chargé via CD
 ### Option 2 : Version Vite (Développement)
 
 1. **Installer les dépendances**
+
 ```bash
 npm install
 ```
 
 2. **Lancer le serveur de développement**
+
 ```bash
 npm run dev
 ```
 
 3. **Ouvrir dans le navigateur**
+
 ```
 http://localhost:3000
 ```
@@ -106,27 +115,35 @@ frontend/
 ## 🎯 Composants principaux
 
 ### Header
+
 Navigation fixe avec :
+
 - Logo Netflix
 - Menu (Accueil, Séries, Films, Ma liste)
 - Barre de recherche
 - Icônes utilisateur
 
 ### Hero
+
 Bannière principale affichant :
+
 - Image de fond du film vedette
 - Titre et description
 - Boutons "Lecture" et "Plus d'infos"
 - Informations (note, année, durée)
 
 ### MovieRow
+
 Rangée horizontale scrollable de films/séries :
+
 - Défilement fluide
 - Plusieurs cartes visibles
 - Flèches de navigation (hover)
 
 ### MovieCard
+
 Carte interactive pour chaque média :
+
 - Poster du film
 - Informations au survol
 - Boutons d'action (Play, Ajouter, Info)
@@ -136,9 +153,17 @@ Carte interactive pour chaque média :
 
 L'application se connecte au backend via l'API REST.
 
+**Backend déployé :** https://backends-netflix.onrender.com
+
 **Configuration dans `app-simple.js` ou `src/services/api.js`:**
+
 ```javascript
-const API_BASE_URL = 'http://localhost:5000/api';
+const API_BASE_URL = "https://backends-netflix.onrender.com/api";
+```
+
+Pour utiliser un backend local :
+```javascript
+const API_BASE_URL = "http://localhost:5000/api";
 ```
 
 ### Endpoints utilisés
@@ -154,18 +179,21 @@ const API_BASE_URL = 'http://localhost:5000/api';
 ## 🎨 Design & Styles
 
 ### Palette de couleurs Netflix
+
 - **Fond principal:** `#141414`
 - **Rouge Netflix:** `#e50914`
 - **Texte:** `#fff`, `#e5e5e5`
 - **Gris secondaire:** `#b3b3b3`
 
 ### Typographie
+
 - **Police:** Helvetica Neue, Helvetica, Arial, sans-serif
 - **Titres hero:** 60px
 - **Titres sections:** 24px
 - **Texte standard:** 14-18px
 
 ### Effets interactifs
+
 - Hover sur cartes : `transform: scale(1.1)`
 - Transitions fluides : `0.3s ease`
 - Scrollbar personnalisée
@@ -175,26 +203,28 @@ const API_BASE_URL = 'http://localhost:5000/api';
 
 ### Routes disponibles
 
-| Route | Page | Description |
-|-------|------|-------------|
-| `/` | Home | Page d'accueil avec hero et tendances |
-| `/#films` | Films | Catalogue de films par genre |
-| `/#series` | Series | Catalogue de séries par genre |
-| `/search?q=` | Search | Résultats de recherche |
-| `/watch/:id` | Player | Lecteur vidéo |
-| `/login` | Login | Connexion |
-| `/register` | Register | Inscription |
-| `/my-list` | MyList | Liste personnelle |
+| Route        | Page     | Description                           |
+| ------------ | -------- | ------------------------------------- |
+| `/`          | Home     | Page d'accueil avec hero et tendances |
+| `/#films`    | Films    | Catalogue de films par genre          |
+| `/#series`   | Series   | Catalogue de séries par genre         |
+| `/search?q=` | Search   | Résultats de recherche                |
+| `/watch/:id` | Player   | Lecteur vidéo                         |
+| `/login`     | Login    | Connexion                             |
+| `/register`  | Register | Inscription                           |
+| `/my-list`   | MyList   | Liste personnelle                     |
 
 ## 📦 Technologies
 
 ### Version CDN
+
 - **React 18** (via CDN)
 - **Axios** (via CDN)
 - **Babel Standalone** (pour JSX)
 - **Vanilla CSS**
 
 ### Version Vite
+
 - **React 18**
 - **React Router DOM 6**
 - **Axios**
@@ -223,6 +253,7 @@ npm run preview  # Prévisualiser le build
 ## 📱 Responsive Design
 
 L'application est optimisée pour :
+
 - 💻 Desktop (1920px+)
 - 💻 Laptop (1366px)
 - 📱 Tablet (768px)
@@ -233,11 +264,13 @@ L'application est optimisée pour :
 Pour utiliser avec le backend :
 
 1. **Cloner le backend**
+
 ```bash
 git clone https://github.com/Jered-M/backends_netflix.git
 ```
 
 2. **Lancer le backend**
+
 ```bash
 cd backends_netflix
 pip install -r requirements.txt
@@ -251,13 +284,17 @@ python app.py
 ## 🐛 Dépannage
 
 ### CORS Errors
+
 Si vous rencontrez des erreurs CORS, vérifiez que :
+
 - Le backend est lancé sur `http://localhost:5000`
 - Flask-CORS est installé dans le backend
 - L'URL de l'API est correcte dans la configuration
 
 ### Problèmes npm
+
 Si `npm install` échoue, utilisez la version CDN :
+
 - Ouvrez simplement `index.html` dans un navigateur
 - Ou utilisez `python -m http.server 3000`
 
@@ -268,6 +305,7 @@ MIT
 ## 👤 Auteur
 
 **Jered M**
+
 - GitHub: [@Jered-M](https://github.com/Jered-M)
 - Backend: [backends_netflix](https://github.com/Jered-M/backends_netflix)
 
@@ -278,12 +316,15 @@ MIT
 ## 📸 Captures d'écran
 
 ### Page d'accueil
+
 Interface avec hero banner et films tendances
 
 ### Page Films
+
 Catalogue organisé par genres
 
 ### Page de détails
+
 Informations complètes sur le média sélectionné
 
 ---

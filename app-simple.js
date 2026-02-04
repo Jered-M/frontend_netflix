@@ -1,7 +1,7 @@
 const { useState, useEffect } = React;
 
 // Configuration API
-const API_BASE_URL = 'http://localhost:5000/api';
+const API_BASE_URL = 'https://backends-netflix.onrender.com/api';
 
 // Composant Header
 function Header({ currentPage, setCurrentPage }) {
